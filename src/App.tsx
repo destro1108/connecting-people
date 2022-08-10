@@ -39,7 +39,7 @@ const App = () => {
         </div>
         <div className="btn-outlined">Load Sample Data</div>
       </div>
-      <PeopleTable people={state.people} />
+      <PeopleTable people={state.people} dispatch={dispatch} />
     </div>
   );
 };
