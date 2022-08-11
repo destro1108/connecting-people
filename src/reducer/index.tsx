@@ -12,8 +12,8 @@ export const ACTIONS = {
 
 export interface stateType {
   people: { [id: number]: PersonType };
-  from: number | null;
-  to: number | null;
+  from: number;
+  to: number;
 }
 
 type ActionAddUser = {
@@ -49,8 +49,8 @@ export type ActionTypes =
 
 export const initialState: stateType = {
   people: JSON.parse(fetchFromLocalStorage("people") ?? "{}"),
-  from: null,
-  to: null,
+  from: -1,
+  to: -1,
 };
 
 // eslint-disable-next-line default-param-last
