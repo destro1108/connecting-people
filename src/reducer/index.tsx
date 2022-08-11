@@ -1,4 +1,5 @@
 import { PersonType } from "../components/person";
+import { fetchFromLocalStorage, saveToLocalStorage } from "../lib";
 
 // eslint-disable-next-line no-shadow
 export const ACTIONS = {
@@ -14,17 +15,6 @@ export interface stateType {
   from: number | null;
   to: number | null;
 }
-
-interface actionType {
-  type: string;
-  payload: any;
-}
-
-export const initialState: stateType = {
-  people: {},
-  from: null,
-  to: null,
-};
 
 type ActionAddUser = {
   type: typeof ACTIONS.ADD_USER;
@@ -57,25 +47,57 @@ export type ActionTypes =
   | ActionSetFrom
   | ActionSetTo;
 
+export const initialState: stateType = {
+  people: JSON.parse(fetchFromLocalStorage("people") ?? "{}"),
+  from: null,
+  to: null,
+};
+
 // eslint-disable-next-line default-param-last
-export default (state: stateType, action: actionType) => {
+export default (state: stateType, action: ActionTypes): stateType => {
   const { type, payload } = action;
   let people;
   switch (type) {
     case ACTIONS.ADD_USER:
-      return { ...state, people: { ...state.people, [payload.id]: payload.person } };
+      saveToLocalStorage(
+        "people",
+        JSON.stringify({
+          ...state.people,
+          [(payload as ActionAddUser["payload"]).id]: (payload as ActionAddUser["payload"]).person,
+        }),
+      );
+      return {
+        ...state,
+        people: {
+          ...state.people,
+          [(payload as ActionAddUser["payload"]).id]: (payload as ActionAddUser["payload"]).person,
+        },
+      };
     case ACTIONS.REMOVE_USER:
-      people = { ...state.people };
-      delete people[payload];
+      people = Object.entries(state.people).reduce(
+        (acc, [id, person]) => ({
+          ...acc,
+          [id]: {
+            ...person,
+            connections: person.connections.filter((conn) => conn.id !== payload),
+          },
+        }),
+        { ...state.people },
+      );
+      delete people[(action as ActionRemoveUser).payload];
+      saveToLocalStorage("people", JSON.stringify(people));
       return { ...state, people };
     case ACTIONS.UPDATE_USER:
       people = { ...state.people };
-      people[payload.id] = payload.person;
+      people[(payload as ActionUpdateUser["payload"]).id] = (
+        payload as ActionUpdateUser["payload"]
+      ).person;
+      saveToLocalStorage("people", JSON.stringify(people));
       return { ...state, people };
     case ACTIONS.SET_FROM:
-      return { ...state, from: payload };
+      return { ...state, from: payload as ActionSetFrom["payload"] };
     case ACTIONS.SET_TO:
-      return { ...state, to: payload };
+      return { ...state, to: payload as ActionSetTo["payload"] };
     default:
       return state;
   }
