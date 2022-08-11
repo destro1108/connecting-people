@@ -13,3 +13,7 @@ html {
 .btn-contained {
   @apply px-4 py-2 rounded-md bg-slate-700 cursor-pointer hover:bg-slate-600 transition-colors;
 }
+
+.select {
+  @apply text-black px-1 py-2 border-none outline-none focus:border-slate-700;
+}

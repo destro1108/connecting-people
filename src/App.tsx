@@ -2,6 +2,7 @@
 import { ChangeEvent, useReducer, useState } from "react";
 import PeopleTable from "./components/peopleTable";
 import { PersonType } from "./components/person";
+import ViewMutualConnections from "./components/viewMutualConnections";
 import reducer, { ACTIONS, initialState } from "./reducer";
 
 const App = () => {
@@ -40,6 +41,12 @@ const App = () => {
         <div className="btn-outlined">Load Sample Data</div>
       </div>
       <PeopleTable people={state.people} dispatch={dispatch} />
+      <ViewMutualConnections
+        from={state.from}
+        to={state.to}
+        people={state.people}
+        dispatch={dispatch}
+      />
     </div>
   );
 };
