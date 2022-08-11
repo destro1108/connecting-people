@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, useState } from "react";
 import { ACTIONS, ActionTypes } from "../reducer";
-import { PersonType } from "./person";
+import { ConnectionsType, PersonType } from "./person";
 
 interface ViewMutualConnectionsProps {
   people: { [key: number]: PersonType };
@@ -16,43 +16,42 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
       payload: parseInt(e.target.value, 10),
     });
 
-  const [state, setState] = useState(null);
+  const [mutualConnections, setMutualConnections] = useState<ConnectionsType[][] | null>(null);
 
-  const find = (id: number, visited: Set<string>, target: number, path: string[]): void => {
+  const find = (
+    source: ConnectionsType,
+    visited: Set<string>,
+    target: number,
+    path: ConnectionsType[],
+  ): void => {
     if (!path || !visited) return;
-    console.log(people[id].name);
-
+    const { id, relation } = source;
     visited.add(people[id].name);
-    path.push(people[id].name);
+    path.push({ id, relation });
     if (parseInt(`${id}`, 10) === target) {
       const tempPath = [...path];
-      console.log("found", tempPath, state);
-      setState((prev) => {
+      setMutualConnections((prev: ConnectionsType[][] | null) => {
         if (!prev) {
           const allPaths = [];
           allPaths.push([...tempPath]);
           return allPaths;
         }
-        console.log("setting", tempPath);
         return [...prev, [...tempPath]];
       });
     } else {
       people[id].connections.forEach((conn) => {
         if (visited.has(people[conn.id].name)) return;
-        console.log(conn.id);
-        find(conn.id, visited, target, path);
+        find(conn, visited, target, path);
       });
     }
     visited.delete(people[id].name);
-    console.log("popping", path.pop());
+    path.pop();
   };
 
   const findConnection = () => {
-    console.log(from, to);
-    const personPool = [];
+    setMutualConnections(null);
     const visited = new Set<string>();
-    find(from, visited, to, []);
-    console.log(state, "55");
+    find({ id: from, relation: null }, visited, to, []);
   };
 
   return (
@@ -101,9 +100,51 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
               ),
           )}
         </select>
-        <button type="button" onClick={findConnection} className="btn-contained mx-4">
+        <button
+          type="button"
+          onClick={findConnection}
+          className="btn-contained mx-4 focus:outline-none"
+        >
           Find
         </button>
+      </div>
+      <div className={`m-2 py-2 border-slate-600 ${mutualConnections?.length && "border-2"}`}>
+        {mutualConnections?.map((connections, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={index} className="flex">
+            {connections.map((connection, connectionIndex) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <div
+                // eslint-disable-next-line react/no-array-index-key
+                key={connection.id + connectionIndex}
+                className="py-2 ml-4 flex"
+              >
+                <div className="flex flex-col ">
+                  <p className="text-xs">{`${connection.relation ?? ""}`}</p>
+                  {connectionIndex !== 0 && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className={`mx-2 h-6 w-6 `}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  )}
+                </div>
+                <p className="p-2 ml-4 border-2 border-slate-500 rounded-xl">
+                  {people[connection.id].name}{" "}
+                </p>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );
