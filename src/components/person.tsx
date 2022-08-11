@@ -22,6 +22,7 @@ interface PersonProps {
 
 const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
   const [connection, setConnection] = useState<ConnectionsType>({ id: -1, relation: null });
+
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) =>
     setConnection({ ...connection, [e.target.name]: e.target.value });
   return (
@@ -44,7 +45,7 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
         <p>{person.name}</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="mx-2 h-6 w-6"
+          className={`mx-2 h-6 w-6 ${person.connections.length ? "" : "hidden"}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -54,7 +55,7 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
         </svg>
         <div className="flex gap-3">
           {person.connections.map((conn) => (
-            <p key={connection.id} className="p-2 border-2 border-slate-500 rounded-2xl">
+            <p key={conn.id} className="p-2 border-2 border-slate-500 rounded-2xl">
               {people[conn.id].name} - {conn.relation?.slice(0, 2)}
             </p>
           ))}
@@ -68,7 +69,7 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
           name="relation"
           onChange={handleChange}
           placeholder="Select Relation"
-          className="text-black px-1 py-2 border-none outline-none focus:border-slate-700"
+          className="select"
         >
           <option value="" disabled>
             Select Relation
@@ -85,7 +86,7 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
           name="id"
           onChange={handleChange}
           placeholder="Select Person"
-          className="text-black px-1 py-2 border-none outline-none focus:border-slate-700"
+          className="select"
         >
           <option value="" disabled>
             Select Person
@@ -101,10 +102,24 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
         </select>
         <button
           type="button"
-          className="btn-contained"
+          className="btn-contained flex"
           onClick={() => connect(connection.relation, connection.id)}
         >
-          Connect
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 md:px-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+            />
+          </svg>
+          <span className="hidden md:flex">Connect</span>
         </button>
       </div>
     </div>
