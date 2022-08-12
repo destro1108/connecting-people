@@ -59,10 +59,10 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
   };
 
   return (
-    <div className="mx-2 mt-4 md:mt-8 flex flex-col">
+    <div className="mx-2 mt-8 flex flex-col">
       <p className="text-xl">Find Connection</p>
       <div className="p-2 flex">
-        <p className="md:px-2 px-1 py-2 text-base md:text-lg flex flex-wrap">Connection between</p>{" "}
+        <p className="px-2 py-2 text-lg">Connection between</p>{" "}
         <select
           id="from"
           defaultValue=""
@@ -83,7 +83,7 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
               ),
           )}
         </select>
-        <p className="px-1 md:px-2 py-2 text-lg">&</p>
+        <p className="px-2 py-2 text-lg">&</p>
         <select
           id="from"
           defaultValue=""
@@ -112,57 +112,37 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
           Find
         </button>
       </div>
-      <div
-        className={`m-2 py-2 flex md:flex-col   border-slate-600 ${
-          mutualConnections?.length && "border-2"
-        }`}
-      >
+      <div className={`m-2 py-2 border-slate-600 ${mutualConnections?.length && "border-2"}`}>
         {mutualConnections?.map((connections, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <div key={index} className="w-full flex flex-col md:flex-row items-center">
+          <div key={index} className="flex">
             {connections.map((connection, connectionIndex) => (
               // eslint-disable-next-line react/no-array-index-key
               <div
                 // eslint-disable-next-line react/no-array-index-key
                 key={connection.id + connectionIndex}
-                className="md:py-2 mt-2 gap-2 md:ml-4 flex flex-col md:flex-row"
+                className="py-2 ml-4 flex"
               >
-                <div className="flex flex-row-reverse md:flex-col items-center">
+                <div className="flex flex-col ">
                   <p className="text-xs">{`${connection.relation ?? ""}`}</p>
                   {connectionIndex !== 0 && (
-                    <>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="mx-2 h-6 w-6 hidden md:flex"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 md:hidden"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M16 17l-4 4m0 0l-4-4m4 4V3"
-                        />
-                      </svg>
-                    </>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className={`mx-2 h-6 w-6 `}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
                   )}
                 </div>
-                <p className="p-2 md:ml-4 border-2 border-slate-500 rounded-xl">
+                <p className="p-2 ml-4 border-2 border-slate-500 rounded-xl">
                   {people[connection.id].name}{" "}
                 </p>
               </div>
