@@ -19,7 +19,7 @@ html {
 }
 
 body::-webkit-scrollbar {
-  @apply w-3 bg-slate-800;
+  @apply w-2 bg-slate-800;
   /* background-color: #f5f5f5; */
 }
 

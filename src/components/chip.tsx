@@ -4,8 +4,10 @@ interface ChipPropTypes {
   className: string;
 }
 
-const Chip = ({ rounded, text, className }: ChipPropTypes) => (
-  <div className={`p-2 border-2 border-slate-500 rounded-${rounded} ${className}`}>{text}</div>
-);
+const Chip = ({ rounded, text, className }: ChipPropTypes) => {
+  return (
+    <div className={`p-2 border-2 border-slate-500 rounded-${rounded} ${className}`}>{text}</div>
+  );
+};
 
 export default Chip;

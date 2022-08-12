@@ -2,7 +2,7 @@ import { ChangeEvent, Dispatch, useState } from "react";
 import { ACTIONS, ActionTypes } from "../reducer";
 import Button from "./button";
 import Chip from "./chip";
-import { ConnectionsType, PersonType } from "./person/person";
+import { ConnectionsType, PersonType } from "./person";
 import Select from "./select";
 
 interface ViewMutualConnectionsProps {
@@ -73,7 +73,7 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
           placeholder="Select Person 1"
           disabledOptionText="Select Person 1"
         >
-          {Object.entries(people)?.map(([id, person]): JSX.Element | null => {
+          {Object.entries(people).map(([id, person]): JSX.Element | null => {
             if (!(parseInt(id, 10) !== to)) return null;
             return (
               <option key={id} value={id} className="px-2 py-1 ">
