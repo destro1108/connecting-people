@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { relationsType } from "../lib";
 import { ACTIONS, ActionTypes } from "../reducer";
-import Person, { PersonType } from "./person";
+import Person, { PersonType } from "./person/person";
 
 interface PeopleTableProps {
   people: { [key: number]: PersonType };
