@@ -1,9 +1,6 @@
 import { ChangeEvent, Dispatch, useState } from "react";
 import { ACTIONS, ActionTypes } from "../reducer";
-import Button from "./button";
-import Chip from "./chip";
 import { ConnectionsType, PersonType } from "./person";
-import Select from "./select";
 
 interface ViewMutualConnectionsProps {
   people: { [key: number]: PersonType };
@@ -62,60 +59,72 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
   };
 
   return (
-    <div className="mx-2 mt-4 md:mt-8 flex flex-col ">
+    <div className="mx-2 mt-4 md:mt-8 flex flex-col">
       <p className="text-xl">Find Connection</p>
-      <div className="p-2 flex gap-4">
+      <div className="p-2 flex">
         <p className="md:px-2 px-1 py-2 text-base md:text-lg flex flex-wrap">Connection between</p>{" "}
-        <Select
+        <select
           id="from"
+          defaultValue=""
           name="from"
           onChange={handleChange}
           placeholder="Select Person 1"
-          disabledOptionText="Select Person 1"
+          className="select"
         >
-          {Object.entries(people).map(([id, person]): JSX.Element | null => {
-            if (!(parseInt(id, 10) !== to)) return null;
-            return (
-              <option key={id} value={id} className="px-2 py-1 ">
-                {person.name}
-              </option>
-            );
-          })}
-        </Select>
+          <option value="" disabled>
+            Select Person 1
+          </option>
+          {Object.entries(people).map(
+            ([id, person]) =>
+              parseInt(id, 10) !== to && (
+                <option key={id} value={id} className="px-2 py-1 ">
+                  {person.name}
+                </option>
+              ),
+          )}
+        </select>
         <p className="px-1 md:px-2 py-2 text-lg">&</p>
-        <Select
-          id="to"
+        <select
+          id="from"
+          defaultValue=""
           name="to"
           onChange={handleChange}
           placeholder="Select Person 2"
-          disabledOptionText="Select Person 2"
+          className="select"
         >
-          {Object.entries(people).map(([id, person]) => {
-            if (!(parseInt(id, 10) !== from)) return null;
-            return (
-              <option key={id} value={id} className="px-2 py-1 ">
-                {person.name}
-              </option>
-            );
-          })}
-        </Select>
-        <Button variant="contained" color="primary" onClick={findConnection}>
+          <option value="" disabled>
+            Select Person 2
+          </option>
+          {Object.entries(people).map(
+            ([id, person]) =>
+              parseInt(id, 10) !== from && (
+                <option key={id} value={id} className="px-2 py-1 ">
+                  {person.name}
+                </option>
+              ),
+          )}
+        </select>
+        <button
+          type="button"
+          onClick={findConnection}
+          className="btn-contained mx-4 focus:outline-none"
+        >
           Find
-        </Button>
+        </button>
       </div>
       <div
         className={`m-2 py-2 flex md:flex-col   border-slate-600 ${
           mutualConnections?.length && "border-2"
         }`}
       >
-        {mutualConnections?.map((connections) => (
-          <div
-            key={connections.length + Math.random()}
-            className="w-full flex flex-col md:flex-row items-center"
-          >
+        {mutualConnections?.map((connections, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={index} className="w-full flex flex-col md:flex-row items-center">
             {connections.map((connection, connectionIndex) => (
+              // eslint-disable-next-line react/no-array-index-key
               <div
-                key={connection.id + Math.random()}
+                // eslint-disable-next-line react/no-array-index-key
+                key={connection.id + connectionIndex}
                 className="md:py-2 mt-2 gap-2 md:ml-4 flex flex-col md:flex-row"
               >
                 <div className="flex flex-row-reverse md:flex-col items-center">
@@ -153,7 +162,9 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
                     </>
                   )}
                 </div>
-                <Chip className="md:ml-4" text={people[connection.id].name} rounded="xl" />
+                <p className="p-2 md:ml-4 border-2 border-slate-500 rounded-xl">
+                  {people[connection.id].name}{" "}
+                </p>
               </div>
             ))}
           </div>
