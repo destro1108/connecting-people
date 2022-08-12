@@ -17,13 +17,3 @@ html {
 .select {
   @apply text-black px-1 py-1 md:py-2 border-none outline-none focus:border-slate-700;
 }
-
-body::-webkit-scrollbar {
-  @apply w-2 bg-slate-800;
-  /* background-color: #f5f5f5; */
-}
-
-body::-webkit-scrollbar-thumb {
-  @apply bg-slate-600;
-  /* border: 2px solid #f56a4b; */
-}
