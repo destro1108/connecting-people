@@ -25,18 +25,6 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) =>
     setConnection({ ...connection, [e.target.name]: e.target.value });
-
-  const handleConnectClick = () => {
-    if (!connection.relation) {
-      alert("Select a Relation");
-      return;
-    }
-    if (connection.id === -1) {
-      alert("Select a Person");
-      return;
-    }
-    connect(connection.relation, connection.id);
-  };
   return (
     <div className="flex px-2 py-4 items-center justify-between">
       <div className="flex items-center">
@@ -112,7 +100,11 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
                 </option>
               ))}
         </select>
-        <button type="button" className="btn-contained flex" onClick={handleConnectClick}>
+        <button
+          type="button"
+          className="btn-contained flex"
+          onClick={() => connect(connection.relation, connection.id)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 md:px-1"
