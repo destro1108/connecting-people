@@ -79,9 +79,7 @@ export default (state: stateType, action: ActionTypes): stateType => {
           ...acc,
           [id]: {
             ...person,
-            connections: person.connections.filter(
-              (conn) => parseInt(`${conn.id}`, 10) !== payload,
-            ),
+            connections: person.connections.filter((conn) => conn.id !== payload),
           },
         }),
         { ...state.people },
