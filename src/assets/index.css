@@ -15,5 +15,5 @@ html {
 }
 
 .select {
-  @apply text-black px-1 py-1 md:py-2 border-none outline-none focus:border-slate-700;
+  @apply text-black px-1 py-2 border-none outline-none focus:border-slate-700;
 }

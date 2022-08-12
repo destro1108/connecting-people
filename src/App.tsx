@@ -24,15 +24,15 @@ const App = () => {
     setName("");
   };
   return (
-    <div className="container mx-auto h-full w-screen bg-outer-space-900 text-gray-200 font-Ubuntu flex flex-col items-center flex-wrap">
-      <div className="w-full flex items-center gap-3 md:gap-8 mt-20 px-2 md:px-3 py-2">
+    <div className="container mx-auto h-full w-screen bg-outer-space-900 text-gray-200 font-Ubuntu">
+      <div className="w-full flex items-center gap-8 mt-20 px-3 py-2">
         <input
           id="name"
           type="text"
           placeholder="Enter a Name..."
           autoComplete="off"
           value={name}
-          className="m-1 px-1 md:px-3 py-2 rounded-md bg-white text-black border-none outline-none"
+          className="m-1 px-3 py-2 rounded-md bg-white text-black border-none outline-none"
           onChange={handleNameChange}
         />
         <div className="btn-contained" onClick={handleAddUser} onKeyPress={handleAddUser}>
