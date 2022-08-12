@@ -1,11 +1,10 @@
 interface ChipPropTypes {
   text: string;
-  rounded: "xl" | "2xl";
   className: string;
 }
 
-const Chip = ({ rounded, text, className }: ChipPropTypes) => (
-  <div className={`p-2 border-2 border-slate-500 rounded-${rounded} ${className}`}>{text}</div>
+const Chip = ({ text, className }: ChipPropTypes) => (
+  <div className={`p-2 border-2 border-slate-500 rounded-xl ${className}`}>{text}</div>
 );
 
 export default Chip;

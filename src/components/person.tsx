@@ -57,7 +57,6 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
           {person.connections.map((personConnection) => (
             <Chip
               key={personConnection.id}
-              rounded="2xl"
               className=""
               text={`${people[personConnection.id].name} - ${personConnection.relation?.slice(
                 0,

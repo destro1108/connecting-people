@@ -153,7 +153,7 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
                     </>
                   )}
                 </div>
-                <Chip className="md:ml-4" text={people[connection.id].name} rounded="xl" />
+                <Chip className="md:ml-4" text={people[connection.id].name} />
               </div>
             ))}
           </div>
