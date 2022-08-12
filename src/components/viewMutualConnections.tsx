@@ -104,7 +104,7 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
         </Button>
       </div>
       <div
-        className={`m-2 mb-8 py-2 w-full flex md:flex-col   border-slate-600 ${
+        className={`m-2 py-2 flex md:flex-col   border-slate-600 ${
           mutualConnections?.length && "border-2"
         }`}
       >
