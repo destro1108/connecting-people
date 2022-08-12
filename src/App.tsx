@@ -28,7 +28,7 @@ const App = () => {
   };
 
   const loadSampleData = (number: number) =>
-    dispatch({ type: ACTIONS.SET_PEOPLE, payload: number === 1 ? sampleData1 : {} });
+    dispatch({ type: ACTIONS.SET_PEOPLE, payload: number === 2 ? sampleData1 : sampleData2 });
 
   return (
     <div className="container mx-auto h-full w-screen bg-outer-space-900 text-gray-200 font-Ubuntu flex flex-col items-center flex-wrap">
