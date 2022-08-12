@@ -38,8 +38,8 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
     connect(connection.relation, connection.id);
   };
   return (
-    <div className="flex px-2 py-4 items-center justify-between">
-      <div className="flex items-center">
+    <div className="px-2 py-4 flex md:flex-row flex-col md:items-center justify-between">
+      <div className="flex items-center my-2">
         <button
           type="button"
           onClick={deletePerson}
@@ -57,7 +57,7 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
         <p>{person.name}</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`mx-2 h-6 w-6 ${person.connections.length ? "" : "hidden"}`}
+          className={`mx-2 h-6 w-6 ${person.connections.length === 0 && "hidden"}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -65,15 +65,15 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
-        <div className="flex gap-3">
-          {person.connections.map((conn) => (
-            <p key={conn.id} className="p-2 border-2 border-slate-500 rounded-2xl">
-              {people[conn.id].name} - {conn.relation?.slice(0, 2)}
+        <div className="flex gap-3 flex-wrap">
+          {person.connections.map((personConnection) => (
+            <p key={personConnection.id} className="p-2 border-2 border-slate-500 rounded-2xl">
+              {people[personConnection.id].name} - {personConnection.relation?.slice(0, 2)}
             </p>
           ))}
         </div>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 my-2">
         <p className="flex items-center">Add Connection: </p>
         <select
           id="relation"
