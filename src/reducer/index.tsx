@@ -1,4 +1,4 @@
-import { PersonType } from "../components/person/person";
+import { PersonType } from "../components/person";
 import { fetchFromLocalStorage, saveToLocalStorage } from "../lib";
 
 export const ACTIONS = {
