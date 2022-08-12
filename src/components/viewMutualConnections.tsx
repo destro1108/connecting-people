@@ -2,7 +2,7 @@ import { ChangeEvent, Dispatch, useState } from "react";
 import { ACTIONS, ActionTypes } from "../reducer";
 import Button from "./button";
 import Chip from "./chip";
-import { ConnectionsType, PersonType } from "./person/person";
+import { ConnectionsType, PersonType } from "./person";
 import Select from "./select";
 
 interface ViewMutualConnectionsProps {
