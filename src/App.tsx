@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { ChangeEvent, useReducer, useState } from "react";
+import Button from "./components/button";
+import InputField from "./components/inputField";
 import PeopleTable from "./components/peopleTable";
 import { PersonType } from "./components/person";
 import ViewMutualConnections from "./components/viewMutualConnections";
@@ -23,22 +25,27 @@ const App = () => {
     dispatch({ type: ACTIONS.ADD_USER, payload: { id: Date.now(), person } });
     setName("");
   };
+
+  const loadSampleData = () => {
+    console.log("loding");
+  };
   return (
     <div className="container mx-auto h-full w-screen bg-outer-space-900 text-gray-200 font-Ubuntu flex flex-col items-center flex-wrap">
       <div className="w-full flex items-center gap-3 md:gap-8 mt-20 px-2 md:px-3 py-2">
-        <input
+        <InputField
           id="name"
+          name="name"
           type="text"
           placeholder="Enter a Name..."
-          autoComplete="off"
           value={name}
-          className="m-1 px-1 md:px-3 py-2 rounded-md bg-white text-black border-none outline-none"
           onChange={handleNameChange}
         />
-        <div className="btn-contained" onClick={handleAddUser} onKeyPress={handleAddUser}>
+        <Button color="primary" variant="contained" onClick={handleAddUser}>
           Add User
-        </div>
-        <div className="btn-outlined">Load Sample Data</div>
+        </Button>
+        <Button color="primary" variant="outlined" onClick={loadSampleData}>
+          Load Sample Data
+        </Button>
       </div>
       <PeopleTable people={state.people} dispatch={dispatch} />
       <ViewMutualConnections
