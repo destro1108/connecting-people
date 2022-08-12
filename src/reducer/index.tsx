@@ -4,7 +4,6 @@ import { PersonType } from "../components/person";
 export const ACTIONS = {
   ADD_USER: "ADD_USER",
   REMOVE_USER: "REMOVE_USER",
-  UPDATE_USER: "UPDATE_USER",
   SET_FROM: "SET_FROM",
   SET_TO: "SET_TO",
 };
@@ -35,12 +34,6 @@ type ActionRemoveUser = {
   type: typeof ACTIONS.REMOVE_USER;
   payload: number;
 };
-
-type ActionUpdateUser = {
-  type: typeof ACTIONS.UPDATE_USER;
-  payload: { id: number; person: PersonType };
-};
-
 type ActionSetFrom = {
   type: typeof ACTIONS.SET_FROM;
   payload: number;
@@ -50,12 +43,7 @@ type ActionSetTo = {
   payload: number;
 };
 
-export type ActionTypes =
-  | ActionAddUser
-  | ActionRemoveUser
-  | ActionUpdateUser
-  | ActionSetFrom
-  | ActionSetTo;
+export type ActionTypes = ActionAddUser | ActionRemoveUser | ActionSetFrom | ActionSetTo;
 
 // eslint-disable-next-line default-param-last
 export default (state: stateType, action: actionType) => {
@@ -67,10 +55,6 @@ export default (state: stateType, action: actionType) => {
     case ACTIONS.REMOVE_USER:
       people = { ...state.people };
       delete people[payload];
-      return { ...state, people };
-    case ACTIONS.UPDATE_USER:
-      people = { ...state.people };
-      people[payload.id] = payload.person;
       return { ...state, people };
     case ACTIONS.SET_FROM:
       return { ...state, from: payload };
