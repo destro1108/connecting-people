@@ -3,9 +3,9 @@ import { ChangeEvent, useReducer, useState } from "react";
 import Button from "./components/button";
 import InputField from "./components/inputField";
 import PeopleTable from "./components/peopleTable";
-import { PersonType } from "./components/person";
+import { PersonType } from "./components/person/person";
 import ViewMutualConnections from "./components/viewMutualConnections";
-import { sampleData1, sampleData2 } from "./lib/sampleData";
+import { sampleData1 } from "./lib";
 import reducer, { ACTIONS, initialState } from "./reducer";
 
 const App = () => {
