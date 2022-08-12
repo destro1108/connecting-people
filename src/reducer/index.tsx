@@ -1,6 +1,7 @@
 import { PersonType } from "../components/person";
 import { fetchFromLocalStorage, saveToLocalStorage } from "../lib";
 
+// eslint-disable-next-line no-shadow
 export const ACTIONS = {
   ADD_USER: "ADD_USER",
   REMOVE_USER: "REMOVE_USER",
@@ -52,6 +53,7 @@ export const initialState: stateType = {
   to: -1,
 };
 
+// eslint-disable-next-line default-param-last
 export default (state: stateType, action: ActionTypes): stateType => {
   const { type, payload } = action;
   let people;

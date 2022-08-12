@@ -1,8 +1,5 @@
 import { ChangeEvent, useState } from "react";
 import { relations, relationsType } from "../lib";
-import Button from "./button";
-import Chip from "./chip";
-import Select from "./select";
 
 export type ConnectionsType = {
   relation: relationsType | null;
@@ -18,6 +15,7 @@ interface PersonProps {
   id: number;
   person: PersonType;
   people: { [id: number]: PersonType };
+  // eslint-disable-next-line no-unused-vars
   connect: (relation: relationsType, personToId: number) => void;
   deletePerson: () => void;
 }
@@ -55,42 +53,42 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
         </svg>
         <div className="flex gap-3 flex-wrap">
           {person.connections.map((personConnection) => (
-            <Chip
-              key={personConnection.id}
-              rounded="2xl"
-              className=""
-              text={`${people[personConnection.id].name} - ${personConnection.relation?.slice(
-                0,
-                2,
-              )}`}
-            />
+            <p key={personConnection.id} className="p-2 border-2 border-slate-500 rounded-2xl">
+              {people[personConnection.id].name} - {personConnection.relation?.slice(0, 2)}
+            </p>
           ))}
         </div>
       </div>
       <div className="flex gap-4 my-2">
         <p className="flex items-center">Add Connection: </p>
-        <Select
+        <select
           id="relation"
+          defaultValue=""
           name="relation"
           onChange={handleChange}
           placeholder="Select Relation"
-          disabledOptionText="Select Relation"
+          className="select"
         >
-          {relations.map(
-            (type): JSX.Element => (
-              <option key={type} value={type} className="px-2 py-1 ">
-                {type}
-              </option>
-            ),
-          )}
-        </Select>
-        <Select
+          <option value="" disabled>
+            Select Relation
+          </option>
+          {relations.map((type) => (
+            <option key={type} value={type} className="px-2 py-1 ">
+              {type}
+            </option>
+          ))}
+        </select>
+        <select
           id="personTo"
+          defaultValue=""
           name="id"
           onChange={handleChange}
           placeholder="Select Person"
-          disabledOptionText="Select Person"
+          className="select"
         >
+          <option value="" disabled>
+            Select Person
+          </option>
           {people &&
             Object.entries(people)
               .filter(([personId]) => id !== parseInt(personId, 10))
@@ -99,11 +97,11 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
                   {personTo.name}
                 </option>
               ))}
-        </Select>
-        <Button variant="contained" color="primary" onClick={handleConnectClick}>
+        </select>
+        <button type="button" className="btn-contained flex" onClick={handleConnectClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 md:h-5 md:w-5 mr-1"
+            className="h-6 w-6 md:px-1"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -116,8 +114,12 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
             />
           </svg>
           <span className="hidden md:flex">Connect</span>
-        </Button>
-        <Button variant="outlined" color="error" onClick={deletePerson}>
+        </button>
+        <button
+          type="button"
+          onClick={deletePerson}
+          className=" text-red-600 cursor-pointer hover:text-red-500 btn-outlined"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -126,7 +128,7 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
           >
             <path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 8a1 1 0 100 2h4a1 1 0 100-2h-4z" />
           </svg>
-        </Button>
+        </button>
       </div>
     </div>
   );
