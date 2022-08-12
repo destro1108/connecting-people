@@ -8,7 +8,7 @@ html {
 }
 
 .btn-outlined {
-  @apply px-2 py-2  rounded-md border-2 border-slate-700 cursor-pointer hover:border-slate-600 transition-colors;
+  @apply px-4 py-2 rounded-md border-2 border-slate-700 cursor-pointer hover:border-slate-600 transition-colors;
 }
 .btn-contained {
   @apply px-4 py-2 rounded-md bg-slate-700 cursor-pointer hover:bg-slate-600 transition-colors;
