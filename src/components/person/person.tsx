@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from "react";
-import { relations, relationsType } from "../lib";
-import Button from "./button";
-import Chip from "./chip";
-import Select from "./select";
+import { relations, relationsType } from "../../lib";
+import Button from "../button";
+import Chip from "../chip";
+import Select from "../select";
 
 export type ConnectionsType = {
   relation: relationsType | null;
