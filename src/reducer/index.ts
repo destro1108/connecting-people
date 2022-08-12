@@ -1,4 +1,4 @@
-import { PersonType } from "../components/person";
+import { ConnectionsType, PersonType } from "../components/person";
 import { fetchFromLocalStorage, saveToLocalStorage } from "../lib";
 
 export const ACTIONS = {
@@ -8,12 +8,14 @@ export const ACTIONS = {
   UPDATE_USER: "UPDATE_USER",
   SET_FROM: "SET_FROM",
   SET_TO: "SET_TO",
+  SET_MUTUAL_CONNECTIONS: "SET_MUTUAL_CONNECTIONS",
 };
 
 export interface stateType {
   people: { [id: number]: PersonType };
   from: number;
   to: number;
+  mutualConnections: ConnectionsType[][] | null;
 }
 
 type ActionSetPeople = {
@@ -40,9 +42,15 @@ type ActionSetFrom = {
   type: typeof ACTIONS.SET_FROM;
   payload: number;
 };
+
 type ActionSetTo = {
   type: typeof ACTIONS.SET_TO;
   payload: number;
+};
+
+type ActionSetMutualConnections = {
+  type: typeof ACTIONS.SET_MUTUAL_CONNECTIONS;
+  payload: ConnectionsType[][] | null;
 };
 
 export type ActionTypes =
@@ -51,12 +59,14 @@ export type ActionTypes =
   | ActionRemoveUser
   | ActionUpdateUser
   | ActionSetFrom
-  | ActionSetTo;
+  | ActionSetTo
+  | ActionSetMutualConnections;
 
 export const initialState: stateType = {
   people: JSON.parse(fetchFromLocalStorage("people") ?? "{}"),
   from: -1,
   to: -1,
+  mutualConnections: null,
 };
 
 export default (state: stateType, action: ActionTypes): stateType => {
@@ -71,6 +81,9 @@ export default (state: stateType, action: ActionTypes): stateType => {
         }),
       );
       return { ...state, people: payload as ActionSetPeople["payload"] };
+
+    case ACTIONS.SET_MUTUAL_CONNECTIONS:
+      return { ...state, mutualConnections: payload as ActionSetMutualConnections["payload"] };
     case ACTIONS.ADD_USER:
       saveToLocalStorage(
         "people",

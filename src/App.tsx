@@ -27,8 +27,10 @@ const App = () => {
     setName("");
   };
 
-  const loadSampleData = (number: number) =>
+  const loadSampleData = (number: number) => {
+    dispatch({ type: ACTIONS.SET_MUTUAL_CONNECTIONS, payload: null });
     dispatch({ type: ACTIONS.SET_PEOPLE, payload: number === 2 ? sampleData1 : sampleData2 });
+  };
 
   return (
     <div className="container mx-auto h-full w-screen bg-outer-space-900 text-gray-200 font-Ubuntu flex flex-col items-center flex-wrap">
@@ -56,6 +58,7 @@ const App = () => {
         from={state.from}
         to={state.to}
         people={state.people}
+        mutualConnections={state.mutualConnections}
         dispatch={dispatch}
       />
     </div>
