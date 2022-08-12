@@ -1,8 +1,7 @@
-import { PersonType } from "../components/person/person";
+import { PersonType } from "../components/person";
 import { fetchFromLocalStorage, saveToLocalStorage } from "../lib";
 
 export const ACTIONS = {
-  SET_PEOPLE: "SET_PEOPLE",
   ADD_USER: "ADD_USER",
   REMOVE_USER: "REMOVE_USER",
   UPDATE_USER: "UPDATE_USER",
@@ -15,11 +14,6 @@ export interface stateType {
   from: number;
   to: number;
 }
-
-type ActionSetPeople = {
-  type: typeof ACTIONS.SET_PEOPLE;
-  payload: { [id: string]: PersonType };
-};
 
 type ActionAddUser = {
   type: typeof ACTIONS.ADD_USER;
@@ -46,7 +40,6 @@ type ActionSetTo = {
 };
 
 export type ActionTypes =
-  | ActionSetPeople
   | ActionAddUser
   | ActionRemoveUser
   | ActionUpdateUser
@@ -63,14 +56,6 @@ export default (state: stateType, action: ActionTypes): stateType => {
   const { type, payload } = action;
   let people;
   switch (type) {
-    case ACTIONS.SET_PEOPLE:
-      saveToLocalStorage(
-        "people",
-        JSON.stringify({
-          ...(payload as ActionSetPeople["payload"]),
-        }),
-      );
-      return { ...state, people: payload as ActionSetPeople["payload"] };
     case ACTIONS.ADD_USER:
       saveToLocalStorage(
         "people",
