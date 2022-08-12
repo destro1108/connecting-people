@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, useState } from "react";
+import { ChangeEvent, Dispatch } from "react";
 import { ACTIONS, ActionTypes } from "../reducer";
 import Button from "./button";
 import Chip from "./chip";
@@ -10,16 +10,23 @@ interface ViewMutualConnectionsProps {
   dispatch: Dispatch<ActionTypes>;
   from: number;
   to: number;
+  mutualConnections: ConnectionsType[][] | null;
 }
 
-const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnectionsProps) => {
+const ViewMutualConnections = ({
+  people,
+  from,
+  to,
+  mutualConnections,
+  dispatch,
+}: ViewMutualConnectionsProps) => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) =>
     dispatch({
       type: e.target.name === "from" ? ACTIONS.SET_FROM : ACTIONS.SET_TO,
       payload: parseInt(e.target.value, 10),
     });
 
-  const [mutualConnections, setMutualConnections] = useState<ConnectionsType[][] | null>(null);
+  // const [mutualConnections, setMutualConnections] = useState<ConnectionsType[][] | null>(null);
 
   const find = (
     source: ConnectionsType,
@@ -33,13 +40,14 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
     path.push({ id, relation });
     if (parseInt(`${id}`, 10) === target) {
       const tempPath = [...path];
-      setMutualConnections((prev: ConnectionsType[][] | null) => {
-        if (!prev) {
-          const allPaths = [];
-          allPaths.push([...tempPath]);
-          return allPaths;
-        }
-        return [...prev, [...tempPath]];
+      const allPaths = [];
+      if (!mutualConnections) {
+        allPaths.push([...tempPath]);
+      }
+
+      dispatch({
+        type: ACTIONS.SET_MUTUAL_CONNECTIONS,
+        payload: !mutualConnections ? allPaths : [...mutualConnections, [...tempPath]],
       });
     } else {
       people[id].connections.forEach((conn) => {
@@ -56,7 +64,7 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
       alert(`Select Person ${from === -1 ? "1" : "2"}`);
       return;
     }
-    setMutualConnections(null);
+    dispatch({ type: ACTIONS.SET_MUTUAL_CONNECTIONS, payload: null });
     const visited = new Set<string>();
     find({ id: from, relation: null }, visited, to, []);
   };
