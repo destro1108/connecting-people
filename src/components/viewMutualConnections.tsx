@@ -49,10 +49,6 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
   };
 
   const findConnection = () => {
-    if (from === -1 || to === -1) {
-      alert(`Select Person ${from === -1 ? "1" : "2"}`);
-      return;
-    }
     setMutualConnections(null);
     const visited = new Set<string>();
     find({ id: from, relation: null }, visited, to, []);
