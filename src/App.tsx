@@ -28,7 +28,8 @@ const App = () => {
   };
 
   const loadSampleData = (number: number) => {
-    dispatch({ type: ACTIONS.SET_MUTUAL_CONNECTIONS, payload: null });
+    // dispatch({ type: ACTIONS.SET_MUTUAL_CONNECTIONS, payload: null });
+    state.clearConnections();
     dispatch({ type: ACTIONS.SET_PEOPLE, payload: number === 2 ? sampleData1 : sampleData2 });
   };
 
@@ -58,7 +59,6 @@ const App = () => {
         from={state.from}
         to={state.to}
         people={state.people}
-        mutualConnections={state.mutualConnections}
         dispatch={dispatch}
       />
     </div>
