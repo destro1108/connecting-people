@@ -23,7 +23,14 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
 
   useEffect(
     () =>
-      dispatch({ type: ACTIONS.SET_CLEAR_CONNECTIONS, payload: () => setMutualConnections(null) }),
+      dispatch({
+        type: ACTIONS.SET_CLEAR_CONNECTIONS,
+        payload: () => {
+          setMutualConnections(null);
+          dispatch({ type: ACTIONS.SET_FROM, payload: -1 });
+          dispatch({ type: ACTIONS.SET_TO, payload: -1 });
+        },
+      }),
     [],
   );
   const find = (
@@ -80,6 +87,7 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
         <Select
           id="from"
           name="from"
+          value={from}
           onChange={handleChange}
           placeholder="Select Person 1"
           disabledOptionText="Select Person 1"
@@ -97,6 +105,7 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
         <Select
           id="to"
           name="to"
+          value={to}
           onChange={handleChange}
           placeholder="Select Person 2"
           disabledOptionText="Select Person 2"

@@ -4,6 +4,7 @@ interface SelectPropTypes {
   id: string;
   name: string;
   placeholder: string;
+  value: number | string;
   disabledOptionText: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   children: (JSX.Element | null)[];
@@ -12,6 +13,7 @@ interface SelectPropTypes {
 const Select = ({
   id,
   name,
+  value,
   placeholder,
   disabledOptionText,
   onChange,
@@ -20,13 +22,13 @@ const Select = ({
   return (
     <select
       id={id}
-      defaultValue=""
+      value={value}
       name={name}
       onChange={onChange}
       placeholder={placeholder}
       className="select"
     >
-      <option value="" disabled>
+      <option value={-1} disabled>
         {disabledOptionText}
       </option>
       {children}
