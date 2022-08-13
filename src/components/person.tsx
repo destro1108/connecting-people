@@ -37,7 +37,7 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
       alert("Select a Person");
       return;
     }
-    connect(connection.relation, connection.id);
+    connect(connection.relation, parseInt(`${connection.id}`, 10));
   };
   return (
     <div className="px-2 py-4 flex lg:flex-row flex-col lg:items-center justify-between">
@@ -72,6 +72,7 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
           id="relation"
           name="relation"
           onChange={handleChange}
+          value={connection.relation ?? -1}
           placeholder="Select Relation"
           disabledOptionText="Select Relation"
         >
@@ -86,6 +87,7 @@ const Person = ({ id, person, people, connect, deletePerson }: PersonProps) => {
         <Select
           id="personTo"
           name="id"
+          value={connection.id}
           onChange={handleChange}
           placeholder="Select Person"
           disabledOptionText="Select Person"
