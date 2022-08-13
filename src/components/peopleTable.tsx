@@ -21,7 +21,12 @@ const PeopleTable = ({ people, dispatch }: PeopleTableProps) => {
             person={person}
             deletePerson={() => deletePerson(parseInt(id, 10))}
             connect={(relation: relationsType, personToId: number) => {
-              if (person.connections.some((conn) => conn.id === personToId)) return;
+              if (
+                person.connections.some(
+                  (conn) => parseInt(`${conn.id}`, 10) === personToId && conn.relation === relation,
+                )
+              )
+                return;
               dispatch({
                 type: ACTIONS.UPDATE_USER,
                 payload: {
