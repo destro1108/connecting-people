@@ -100,6 +100,7 @@ export default (state: stateType, action: ActionTypes): stateType => {
         },
       };
     case ACTIONS.REMOVE_USER:
+      state.clearConnections();
       people = Object.entries(state.people).reduce(
         (acc, [id, person]) => ({
           ...acc,
