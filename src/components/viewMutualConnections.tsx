@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, useEffect, useState } from "react";
 import { ACTIONS, ActionTypes } from "../reducer";
 import Button from "./button";
-import Chip from "./chip";
+import Connection from "./connection";
 import { ConnectionsType, PersonType } from "./person";
 import Select from "./select";
 
@@ -10,7 +10,6 @@ interface ViewMutualConnectionsProps {
   dispatch: Dispatch<ActionTypes>;
   from: number;
   to: number;
-  // mutualConnections: ConnectionsType[][] | null;
 }
 
 const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnectionsProps) => {
@@ -33,6 +32,7 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
       }),
     [],
   );
+
   const find = (
     source: ConnectionsType,
     visited: Set<string>,
@@ -53,11 +53,6 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
         }
         return [...prev, [...tempPath]];
       });
-
-      // dispatch({
-      //   type: ACTIONS.SET_MUTUAL_CONNECTIONS,
-      //   payload: !mutualConnections ? allPaths : [...mutualConnections, [...tempPath]],
-      // });
     } else {
       people[id].connections.forEach((conn) => {
         if (visited.has(people[conn.id].name)) return;
@@ -73,7 +68,6 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
       alert(`Select Person ${from === -1 ? "1" : "2"}`);
       return;
     }
-    // dispatch({ type: ACTIONS.SET_MUTUAL_CONNECTIONS, payload: null });
     setMutualConnections(null);
     const visited = new Set<string>();
     find({ id: from, relation: null }, visited, to, []);
@@ -134,47 +128,12 @@ const ViewMutualConnections = ({ people, from, to, dispatch }: ViewMutualConnect
             className="w-full flex flex-col md:flex-row items-center"
           >
             {connections.map((connection, connectionIndex) => (
-              <div
+              <Connection
                 key={connection.id + Math.random()}
-                className="md:py-2 mt-2 gap-2 md:ml-4 flex flex-col md:flex-row"
-              >
-                <div className="flex flex-row-reverse md:flex-col items-center">
-                  <p className="text-xs">{`${connection.relation ?? ""}`}</p>
-                  {connectionIndex !== 0 && (
-                    <>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="mx-2 h-6 w-6 hidden md:flex"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 md:hidden"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M16 17l-4 4m0 0l-4-4m4 4V3"
-                        />
-                      </svg>
-                    </>
-                  )}
-                </div>
-                <Chip className="md:ml-4" text={people[connection.id].name} />
-              </div>
+                connection={connection}
+                hideArrow={connectionIndex === 0}
+                name={people[connection.id].name}
+              />
             ))}
           </div>
         ))}
