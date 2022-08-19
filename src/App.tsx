@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { ChangeEvent, useReducer, useState } from "react";
 import Button from "./components/button";
 import InputField from "./components/inputField";
@@ -28,7 +27,6 @@ const App = () => {
   };
 
   const loadSampleData = (number: number) => {
-    // dispatch({ type: ACTIONS.SET_MUTUAL_CONNECTIONS, payload: null });
     state.clearConnections();
     dispatch({ type: ACTIONS.SET_PEOPLE, payload: number === 2 ? sampleData1 : sampleData2 });
   };

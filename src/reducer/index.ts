@@ -84,6 +84,7 @@ export default (state: stateType, action: ActionTypes): stateType => {
 
     case ACTIONS.SET_CLEAR_CONNECTIONS:
       return { ...state, clearConnections: payload as ActionSetClearConnection["payload"] };
+
     case ACTIONS.ADD_USER:
       saveToLocalStorage(
         "people",
@@ -99,6 +100,7 @@ export default (state: stateType, action: ActionTypes): stateType => {
           [(payload as ActionAddUser["payload"]).id]: (payload as ActionAddUser["payload"]).person,
         },
       };
+
     case ACTIONS.REMOVE_USER:
       state.clearConnections();
       people = Object.entries(state.people).reduce(
@@ -116,6 +118,7 @@ export default (state: stateType, action: ActionTypes): stateType => {
       delete people[(action as ActionRemoveUser).payload];
       saveToLocalStorage("people", JSON.stringify(people));
       return { ...state, people };
+
     case ACTIONS.UPDATE_USER:
       people = { ...state.people };
       people[(payload as ActionUpdateUser["payload"]).id] = (
@@ -123,10 +126,13 @@ export default (state: stateType, action: ActionTypes): stateType => {
       ).person;
       saveToLocalStorage("people", JSON.stringify(people));
       return { ...state, people };
+
     case ACTIONS.SET_FROM:
       return { ...state, from: payload as ActionSetFrom["payload"] };
+
     case ACTIONS.SET_TO:
       return { ...state, to: payload as ActionSetTo["payload"] };
+
     default:
       return state;
   }
